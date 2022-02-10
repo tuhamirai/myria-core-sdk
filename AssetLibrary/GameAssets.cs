@@ -6,7 +6,6 @@ namespace GameFoundation.Scripts.AssetLibrary
     using System.Collections.Generic;
     using System.Linq;
     using Cysharp.Threading.Tasks;
-    using GameFoundation.Scripts.ScreenFlow.Managers;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using UnityEngine.ResourceManagement.AsyncOperations;
@@ -22,29 +21,31 @@ namespace GameFoundation.Scripts.AssetLibrary
         /// <summary>
         /// A dictionary use for manage the loading assets to make sure a asset doesn't call Addressable too many times at a time
         /// </summary>
-        private static readonly Dictionary<object, AsyncOperationHandle> LoadingAssets = new Dictionary<object, AsyncOperationHandle>(20);
+        private static readonly Dictionary<object, AsyncOperationHandle> LoadingAssets = new(20);
 
         /// <summary>
         /// A dictionary use for caching the loaded assets
         /// </summary>
-        private static readonly Dictionary<object, AsyncOperationHandle> LoadedAssets = new Dictionary<object, AsyncOperationHandle>(100);
+        private static readonly Dictionary<object, AsyncOperationHandle> LoadedAssets = new(100);
         
         /// <summary>
         /// A dictionary use for caching the loaded assets
         /// </summary>
-        private static readonly Dictionary<object, AsyncOperationHandle> LoadedScenes = new Dictionary<object, AsyncOperationHandle>();
+        private static readonly Dictionary<object, AsyncOperationHandle> LoadedScenes = new();
 
         /// <summary>
         /// Manage the loaded asset by scene and release them when those scene unloaded
         /// </summary>
-        private static readonly Dictionary<string, List<object>> AssetsAutoUnloadByScene = new Dictionary<string, List<object>>();
+        private static readonly Dictionary<object, List<object>> AssetsAutoUnloadByScene = new();
 
         /// <summary>
         /// Cache all objects that instantiated by GameAsssets
         /// </summary>
-        private static readonly Dictionary<object, List<GameObject>> InstantiatedObjects = new Dictionary<object, List<GameObject>>(10);
+        private static readonly Dictionary<object, List<GameObject>> InstantiatedObjects = new(10);
 
         private static void CheckRuntimeKey(object key) { }
+
+        private static object loadingSceneKey;
 
         private static void CheckRuntimeKey(AssetReference aRef)
         {
@@ -162,6 +163,7 @@ namespace GameFoundation.Scripts.AssetLibrary
         /// <param name="activeOnLoad">If false, the scene will load but not activate (for background loading).  The SceneInstance returned has an Activate() method that can be called to do this at a later point.</param>
         public static AsyncOperationHandle<SceneInstance> LoadSceneAsync(object key, LoadSceneMode loadMode = LoadSceneMode.Single, bool activeOnLoad = true)
         {
+            loadingSceneKey = key;
             return InternalLoadAsync(() => Addressables.LoadSceneAsync(key, loadMode, activeOnLoad), key, true, true);
         }
 
@@ -210,10 +212,10 @@ namespace GameFoundation.Scripts.AssetLibrary
         /// /// <param name="key">The key of the location of the asset.</param>
         private static void TrackingAssetByScene(object key)
         {
-            if (!AssetsAutoUnloadByScene.TryGetValue(SceneDirector.CurrentSceneName, out var listAsset))
+            if (!AssetsAutoUnloadByScene.TryGetValue(loadingSceneKey, out var listAsset))
             {
                 listAsset = new List<object>();
-                AssetsAutoUnloadByScene.Add(SceneDirector.CurrentSceneName, listAsset);
+                AssetsAutoUnloadByScene.Add(loadingSceneKey, listAsset);
             }
 
             listAsset.Add(key);
