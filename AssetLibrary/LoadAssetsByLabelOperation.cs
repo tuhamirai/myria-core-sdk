@@ -1,4 +1,4 @@
-﻿namespace GameFoundation.Scripts.AssetLibrary
+﻿namespace myria_core_sdk.AssetLibrary
 {
     using System;
     using System.Collections.Generic;
