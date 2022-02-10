@@ -1,3 +1,3 @@
-[submodule "unity-test-sdk/Asset/myria-core-sdk"]
-	path = unity-test-sdk/Asset/myria-core-sdk
-	url = git@github.com-myria:MyriaWorld/myria-core-sdk.git
+[submodule "unity-test-sdk/Assets/myria-core-sdk"]
+	path = unity-test-sdk/Assets/myria-core-sdk
+	url = git@github.com:MyriaWorld/myria-core-sdk.git
