@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Character Models
+  m_EditorClassIdentifier: 
+  m_GroupName: Character Models
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b18fc40797adfdb4bad025aa77089ae0
+  m_SerializeEntries:
+  - m_GUID: 02ac59dea0bf44d4d87bba04f0a6ca33
+    m_Address: Character_AncientQueen_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c7cebe2178705794aa9a9911f182d8c1
+    m_Address: Character_AncientWarrior_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d9162a78a8deb714a9bddd8038021008
+    m_Address: Character_BR_BarbarianGiant_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0d42bc61d684259409d481c6f5dd5d5c
+    m_Address: Character_BR_BigOrk_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 00df519327294ce4da5a577098c3ed4f
+    m_Address: Character_BR_Dwarf_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 93c0dd75ddc1c9f4dabe9f061ef19748
+    m_Address: Character_BR_ElementalGolem_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fe16b94572a04254e9757241e9e92235
+    m_Address: Character_BR_FortGolem_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5aed7f791a03c2a4ba0040d2fa161639
+    m_Address: Character_BR_MechanicalGolem_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: f9f6be802bd0fe3448c68a8b6f205bce
+    m_Address: Character_BR_MutantGuy_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: a744caf4676601646ab2385371d1d140
+    m_Address: Character_BR_PigButcher_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 3c9c85e47d53d1f4aaa97330d98c0680
+    m_Address: Character_BR_RedDemon_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b2739774a07ffdb459c1bd60e3ef4f10
+    m_Address: Character_BR_Slayer_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 2250a4a4fc528684c85ba955eb992ec6
+    m_Address: Character_BR_Troll_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9d2d21ead9f817446aa6c299b76f7e89
+    m_Address: Character_DarkElf_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: fc469b2d4ae90f6408eedaaa707d812f
+    m_Address: Character_EvilGod_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: eda5ef8bfa1b36842be7b6d0ddc57616
+    m_Address: Character_ForestGuardian_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: c6817eb5530563147aad2cfd830512b9
+    m_Address: Character_ForestWitch_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 333e5531d0814614f9738b8e0f3807cd
+    m_Address: Character_Medusa_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: e218b66930d51a741a5150ddb1bfeec0
+    m_Address: Character_Mystic_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9984be23625843a48a44d88aae5669f2
+    m_Address: Character_SpiritDemon_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ec297935151c4443bb66d55568c5146e, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 27ca3541627719246ade29a676a4ae63, type: 2}
+    - {fileID: 11400000, guid: bd97d4597792c09449710c64dc43ddf7, type: 2}
