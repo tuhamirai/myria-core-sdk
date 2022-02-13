@@ -43,6 +43,8 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 646d6d2d94dd64ad7aabda97ad54a7ef, type: 2}
   - {fileID: 11400000, guid: 7084e408fed814dc4a9b4c96a68dfd88, type: 2}
+  - {fileID: 11400000, guid: 5f57cfa8b8c6ba546b2e2b3dfd7916b8, type: 2}
+  - {fileID: 11400000, guid: 56022e629c8389d458654387851d6428, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -63,7 +65,7 @@ MonoBehaviour:
       - m_Id: bf76b7d74333045e789fe82e8b435f6f
         m_Value: ServerData/[BuildTarget]
       - m_Id: cb1d476e3b35d43548a06bd4a3e6ae59
-        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+        m_Value: https://mech-master-ar.s3.ap-southeast-1.amazonaws.com/test/
     m_ProfileEntryNames:
     - m_Id: 651b5cb05e5ba4f38b85694cca9db4b0
       m_Name: BuildTarget
