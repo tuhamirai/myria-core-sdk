@@ -1,50 +1,68 @@
 namespace myria_core_sdk.AssetLibrary
 {
+    using System;
+    using System.Collections;
+    using System.Linq;
     using Cysharp.Threading.Tasks;
-    using UnityEngine;
     using UnityEngine.AddressableAssets;
+    using UnityEngine.Events;
 
     public class AssetDownloadingHelper
     {
-        private long totalDownloadSizeKb;
-        
-        private async void Download()
+        private const float DownloadingProgressActionTimeStep = 0.02f;
+
+        /// <summary>
+        /// Wrap https://docs.unity3d.com/Packages/com.unity.addressables@1.15/manual/DownloadDependenciesAsync.html with download progress
+        /// </summary>
+        public async void DownloadDependenciesAsync(object key, UnityAction<float> progressAction, bool autoReleaseHandle = false)
         {
-            this.totalDownloadSizeKb = await Addressables.GetDownloadSizeAsync(AllKeys).Task;
-
-            if (this.totalDownloadSizeKb == 0)
+            var downloadSize = await Addressables.GetDownloadSizeAsync(key);
+            if (downloadSize > 0)
             {
-                this.View.ImgLoadingFiller.fillAmount = 1;
-                this.View.TxtPercent.text             = "100%";
-                this.View.TxtProcessName.text         = LoadingProcessText;
-                return;
-            }
-
-            var downloadedKb = 0f;
-            this.View.ImgLoadingFiller.fillAmount = 0;
-            this.View.TxtProcessName.text         = DownloadProcessText;
-            foreach (var key in AllKeys)
-            {
-                var keyDownloadSizeKb = await Addressables.GetDownloadSizeAsync(key).Task;
-                if (keyDownloadSizeKb <= 0) continue;
-
-                var keyDownloadOperation = Addressables.DownloadDependenciesAsync(key);
-                while (!keyDownloadOperation.IsDone)
+                var downloadDependenciesAsync = Addressables.DownloadDependenciesAsync(key, autoReleaseHandle);
+                while (!downloadDependenciesAsync.IsDone)
                 {
-                    await UniTask.Yield();
-                    var acquiredKb      = downloadedKb + (keyDownloadOperation.PercentComplete * keyDownloadSizeKb);
-                    var percentDownload = acquiredKb / this.totalDownloadSizeKb;
-                    //TODO: this is a temporary fixing, need to investigate why the progressPercentage go more than 100% after minimizing then resuming app. 
-                    var totalProgressPercentage = Mathf.Min(percentDownload * 100, 100);
-
-                    this.View.ImgLoadingFiller.fillAmount = totalProgressPercentage;
-                    this.View.TxtPercent.text             = $"{(int)totalProgressPercentage}%";
+                    progressAction(downloadDependenciesAsync.PercentComplete);
+                    await UniTask.Delay(TimeSpan.FromSeconds(DownloadingProgressActionTimeStep));
                 }
-
-                downloadedKb += keyDownloadSizeKb;
             }
 
-            this.View.TxtProcessName.text = LoadingProcessText;
+            progressAction(1f);
+        }
+
+        /// <summary>
+        /// Wrap https://docs.unity3d.com/Packages/com.unity.addressables@1.15/manual/DownloadDependenciesAsync.html with download progress
+        /// don't use public static AsyncOperationHandle<long> GetDownloadSizeAsync(IList<object> keys) because it's Obsolete
+        /// </summary>
+        public async void DownloadDependenciesAsync(IEnumerable keys, UnityAction<float> progressAction, Addressables.MergeMode mergeMode = Addressables.MergeMode.Union,
+            bool autoReleaseHandle = false)
+        {
+            var downloadSize = await Addressables.GetDownloadSizeAsync(keys);
+            if (downloadSize > 0)
+            {
+                var downloadDependenciesAsync = Addressables.DownloadDependenciesAsync(keys, Addressables.MergeMode.Union, autoReleaseHandle);
+                while (!downloadDependenciesAsync.IsDone)
+                {
+                    progressAction(downloadDependenciesAsync.PercentComplete);
+                    await UniTask.Delay(TimeSpan.FromSeconds(DownloadingProgressActionTimeStep));
+                }
+            }
+
+            progressAction(1f);
+        }
+
+        public async void DownloadAllAssetsAsync(UnityAction<float> progressAction)
+        {
+            var resourceLocator     = await Addressables.InitializeAsync();
+            var allKeys             = resourceLocator.Keys.ToList();
+            var totalDownloadSizeKb = await Addressables.GetDownloadSizeAsync(allKeys);
+
+            if (totalDownloadSizeKb > 0)
+            {
+                this.DownloadDependenciesAsync(allKeys, progressAction);
+            }
+            
+            progressAction(1f);
         }
     }
 }
