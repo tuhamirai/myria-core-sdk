@@ -7,14 +7,17 @@
 
     public class AssetLoadingHelper
     {
-        private const float LoadingProgressActionTimeStep = 0.02f;
+        private readonly IGameAssets gameAssets;
+        private const    float       LoadingProgressActionTimeStep = 0.02f;
 
+        public AssetLoadingHelper(IGameAssets gameAssets) { this.gameAssets = gameAssets; }
+        
         /// <summary>
         /// Load Asset and it's dependencies by key, also do progressAction during that process
         /// </summary>
         public async void LoadAssetAsync<T>(object key, UnityAction<float> progressAction, bool isAutoUnload = true)
         {
-            var asyncOperationHandle = GameAssets.LoadAssetAsync<T>(key, isAutoUnload);
+            var asyncOperationHandle = this.gameAssets.LoadAssetAsync<T>(key, isAutoUnload);
 
             while (!asyncOperationHandle.IsDone)
             {
@@ -30,7 +33,7 @@
         /// </summary>
         public async void LoadSceneAsync(object key, UnityAction<float> progressAction, LoadSceneMode loadMode = LoadSceneMode.Single, bool activeOnLoad = true)
         {
-            var asyncOperationHandle = GameAssets.LoadSceneAsync(key, loadMode, activeOnLoad);
+            var asyncOperationHandle = this.gameAssets.LoadSceneAsync(key, loadMode, activeOnLoad);
 
             while (!asyncOperationHandle.IsDone)
             {

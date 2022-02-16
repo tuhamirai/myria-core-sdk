@@ -7,13 +7,14 @@ namespace myria_core_sdk.AssetLibrary
     {
         public AssetReference asset;
 
+        private IGameAssets gameAssets;
         public void Link(AssetReference obj)
         {
             this.asset = obj;
         }
         private void OnDestroy()
         {
-            GameAssets.ReleaseAsset(this.asset);
+            this.gameAssets.ReleaseAsset(this.asset);
         }
     }
 }

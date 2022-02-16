@@ -1,4 +1,4 @@
-namespace myria_core_sdk.AssetLibrary
+﻿namespace myria_core_sdk.AssetLibrary
 {
     using System;
     using System.Collections;
